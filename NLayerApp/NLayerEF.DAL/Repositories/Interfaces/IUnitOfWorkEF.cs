@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NLayerEF.DAL.Repositories
+namespace NLayerEF.DAL.Repositories.Interfaces
 {
     public interface IUnitOfWorkEF
     {

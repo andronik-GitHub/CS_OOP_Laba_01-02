@@ -3,8 +3,9 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using NLayerEF.DAL.Data;
 using NLayerEF.DAL.Exeption;
+using NLayerEF.DAL.Repositories.Interfaces;
 
-namespace NLayerEF.DAL.Repositories
+namespace NLayerEF.DAL.Repositories.Classes
 {
     public abstract class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {

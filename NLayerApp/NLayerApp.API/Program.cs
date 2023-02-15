@@ -9,8 +9,8 @@ using System.Data.SqlClient;
 using System.Data;
 using NLayerApp.BLL.Services.Interfaces;
 using NLayerApp.BLL.Services.Classes;
-using NLayerEF.DAL.Repositories;
-
+using NLayerEF.DAL.Repositories.Interfaces;
+using NLayerEF.DAL.Repositories.Classes;
 
 var builder = WebApplication.CreateBuilder();
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NLayerApp.BLL.DTO;
 using NLayerApp.BLL.Services.Interfaces;
-using NLayerEF.DAL.Repositories;
+using NLayerEF.DAL.Repositories.Interfaces;
 
 namespace NLayerApp.API.Controllers
 {

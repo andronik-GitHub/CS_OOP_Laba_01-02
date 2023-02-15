@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace NLayerEF.DAL.Repositories
+namespace NLayerEF.DAL.Repositories.Interfaces
 {
     public interface IRepository<TEntity> where TEntity : class
     {
