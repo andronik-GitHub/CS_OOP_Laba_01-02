@@ -2,9 +2,11 @@ using NLayerApp.DAL.App_Setting.DB_Tables.Classes;
 using NLayerApp.DAL.App_Setting.DB_Tables.Interfaces;
 using NLayerApp.DAL.Repositories.Classes;
 using NLayerApp.DAL.Repositories.Interfaces;
+using NLayerApp.DAL.App_Setting;
 
 using System.Data.SqlClient;
 using System.Data;
+
 
 
 var builder = WebApplication.CreateBuilder();
@@ -32,7 +34,7 @@ builder.Services.AddControllers();
     builder.Services.AddScoped<IUserBook_Repository, UserBook_Repository>();
     builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-    // Application Setting
+    // Application Setting (Для створення БД/Таблиць та заповнення їх)
     builder.Services.AddScoped<ICID_Database, DB_Collection_Books>();
     builder.Services.AddScoped<ICID_Table_Books, TABLE_Books>();
     builder.Services.AddScoped<ICID_Table_BooksWithGenres, TABLE_BooksWithGenres>();
@@ -46,6 +48,11 @@ builder.Services.AddControllers();
 }
 
 var app = builder.Build();
+
+
+// Створення БД/Таблиць та заповнення їх
+//await App_Set.Setting("Server=(localdb)\\mssqllocaldb;Database=master;Trusted_Connection=True;", builder.Services);
+
 
 app.MapControllers();
 
