@@ -31,11 +31,14 @@ namespace NLayerApp.DAL.Repositories.Classes
         }
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-            return await _connection.QueryAsync<T>($"SELECT * FROM [{_tableName}]", transaction: _transaction);
+            return await _connection.QueryAsync<T>(
+                $"SELECT * FROM [{_tableName}]", 
+                transaction: _transaction);
         }
         public virtual async Task<T> GetAsync(int id)
         {
-            var result = await _connection.QuerySingleOrDefaultAsync<T>($"SELECT * FROM [{_tableName}] WHERE Id=@Id",
+            var result = await _connection.QuerySingleOrDefaultAsync<T>(
+                $"SELECT * FROM [{_tableName}] WHERE Id=@Id",
                 param: new { Id = id },
                 transaction: _transaction);
 

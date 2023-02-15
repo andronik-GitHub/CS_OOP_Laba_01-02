@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NLayerApp.DAL.Repositories.Interfaces;
-using NLayerApp.DAL.Entities;
+using NLayerApp.BLL.DTO;
+using NLayerApp.BLL.Services.Interfaces;
 
 namespace NLayerApp.API.Controllers
 {
@@ -8,24 +8,24 @@ namespace NLayerApp.API.Controllers
     [ApiController]
     public class UsersController : Controller
     {
-        private IUnitOfWork _uow;
-        public UsersController(IUnitOfWork unitOfWork)
+        IUserService _userService;
+        public UsersController(IUserService userService)
         {
-            this._uow = unitOfWork;
+            this._userService = userService;
         }
 
 
         [HttpGet] // GET: api/users
-        public async Task<ActionResult<IEnumerable<User>>> GetAllAsync()
+        public async Task<ActionResult<IEnumerable<UserDTO>>> GetAllAsync()
         {
             try
             {
-                var result = await _uow.Users.GetAllAsync();
+                var result = await _userService.GetAllAsync();
                 Console.WriteLine("All users were successfully extracted from [Users]");
 
                 return Ok(result);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine("Error in [UsersController]->[GetAllAsync]\n " + ex.Message);
                 return StatusCode(500, "Status Code: 500");
@@ -33,11 +33,11 @@ namespace NLayerApp.API.Controllers
         }
 
         [HttpGet("{id}")] // GET: api/users/id
-        public async Task<ActionResult<User>> GetByIdAsync(int id)
+        public async Task<ActionResult<UserDTO>> GetByIdAsync(int id)
         {
             try
             {
-                var result = await _uow.Users.GetAsync(id); // чи взагалі є такий запис в БД
+                var result = await _userService.GetAsync(id); // чи взагалі є такий запис в БД
 
                 if (result == null)
                 {
@@ -58,7 +58,7 @@ namespace NLayerApp.API.Controllers
         }
 
         [HttpPost] // POST: api/users?nikname=...&email=...&sex=...&aboutmyself=...
-        public async Task<ActionResult> AddAsync(User newUser)
+        public async Task<ActionResult> AddAsync(UserDTO newUser)
         {
             try
             {
@@ -69,15 +69,8 @@ namespace NLayerApp.API.Controllers
                 }
                 else
                 {
-                    var id = await _uow.Users.CreateAsync(new User
-                    {
-                        NikName = newUser.NikName,
-                        Email = newUser.Email,
-                        Sex = newUser.Sex,
-                        AboutMyself = newUser.AboutMyself,
-                    });
-                    _uow.Save();
-                    Console.WriteLine($"User{id} successfully added to [Users]");
+                    var id = await _userService.CreateAsync(newUser);
+                    Console.WriteLine($"User {id} successfully added to [Users]");
 
                     return Ok(id);
                 }
@@ -90,7 +83,7 @@ namespace NLayerApp.API.Controllers
         }
 
         [HttpPut] // PUT: api/users?id=...&nikname=...&email=...&sex=...&aboutmyself=...
-        public async Task<ActionResult> UpdateAsync(User upUser)
+        public async Task<ActionResult> UpdateAsync(UserDTO upUser)
         {
             try
             {
@@ -101,7 +94,7 @@ namespace NLayerApp.API.Controllers
                 }
                 else
                 {
-                    var result = await _uow.Users.GetAsync(upUser.Id); // чи взагалі є такий запис в БД
+                    var result = await _userService.GetAsync(upUser.Id); // чи взагалі є такий запис в БД
 
                     if (result == null)
                     {
@@ -110,15 +103,7 @@ namespace NLayerApp.API.Controllers
                     }
                     else
                     {
-                        await _uow.Users.UpdateAsync(new User
-                        {
-                            Id = upUser.Id,
-                            NikName = upUser.NikName,
-                            Email = upUser.Email,
-                            Sex = upUser.Sex,
-                            AboutMyself = upUser.AboutMyself,
-                        });
-                        _uow.Save();
+                        await _userService.UpdateAsync(upUser);
                         Console.WriteLine($"User{upUser.Id} successfully update to [Users]");
 
                         return Ok();
@@ -137,7 +122,7 @@ namespace NLayerApp.API.Controllers
         {
             try
             {
-                var result = await _uow.Users.GetAsync(id); // чи взагалі є такий запис в БД
+                var result = await _userService.GetAsync(id); // чи взагалі є такий запис в БД
 
                 if (result == null)
                 {
@@ -146,8 +131,7 @@ namespace NLayerApp.API.Controllers
                 }
                 else
                 {
-                    await _uow.Users.DeleteAsync(id);
-                    _uow.Save();
+                    await _userService.DeleteAsync(id);
                     Console.WriteLine($"User{id} successfully deleted to [Users]");
 
                     return Ok();

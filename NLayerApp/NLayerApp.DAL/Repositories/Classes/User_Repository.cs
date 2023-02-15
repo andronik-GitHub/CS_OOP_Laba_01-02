@@ -33,12 +33,11 @@ namespace NLayerApp.DAL.Repositories.Classes
         {
             await _connection.ExecuteAsync(
                 $@"UPDATE [{_tableName}] 
-                SET NikName = @{item.NikName}, 
-                    Email = @{item.Email},
-                    Sex = @{item.Sex}, 
-                    AboutMyself = @{item.AboutMyself}, 
-                    RegistrationDate = @{item.RegistrationDate}
-                WHERE Id = @{item.Id}",
+                SET NikName = @NikName, 
+                    Email = @Email,
+                    Sex = @Sex, 
+                    AboutMyself = @AboutMyself
+                WHERE Id = @Id",
                 param: item,
                 transaction: _transaction);
         }
