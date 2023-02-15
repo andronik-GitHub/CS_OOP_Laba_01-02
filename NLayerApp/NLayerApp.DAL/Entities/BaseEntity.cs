@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace NLayerApp.DAL.Entities
 {
-    public class BaseEntity
+    public abstract class BaseEntity
     {
-        public int Id;
+        public int Id { get; set; } = 0;
     }
 }
