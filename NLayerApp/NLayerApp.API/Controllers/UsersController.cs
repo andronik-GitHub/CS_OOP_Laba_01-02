@@ -57,7 +57,7 @@ namespace NLayerApp.API.Controllers
             }
         }
 
-        [HttpPost] // POST: api/users?nikname=...&email=...&sex=...&aboutmyself=...
+        [HttpPost] // POST: api/users
         public async Task<ActionResult> AddAsync(UserDTO newUser)
         {
             try
@@ -82,7 +82,7 @@ namespace NLayerApp.API.Controllers
             }
         }
 
-        [HttpPut] // PUT: api/users?id=...&nikname=...&email=...&sex=...&aboutmyself=...
+        [HttpPut] // PUT: api/users
         public async Task<ActionResult> UpdateAsync(UserDTO upUser)
         {
             try
