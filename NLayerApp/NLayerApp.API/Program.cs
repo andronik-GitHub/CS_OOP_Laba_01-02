@@ -12,6 +12,7 @@ using System.Data;
 var builder = WebApplication.CreateBuilder();
 
 builder.Services.AddControllers();
+
 {
     builder.Services.AddScoped((s) => {
         return new SqlConnection("Server=(localdb)\\mssqllocaldb;Database=Collection_Books;Trusted_Connection=True;");
@@ -46,10 +47,11 @@ builder.Services.AddControllers();
     DB_Collection_Books.services = builder.Services;
 }
 
+
 var app = builder.Build();
 
 // Створення БД/Таблиць та заповнення їх
-//await App_Set.Setting("Server=(localdb)\\mssqllocaldb;Database=master;Trusted_Connection=True;", builder.Services);
+await App_Set.Setting("Server=(localdb)\\mssqllocaldb;Database=master;Trusted_Connection=True;", builder.Services);
 
 app.MapControllers();
 

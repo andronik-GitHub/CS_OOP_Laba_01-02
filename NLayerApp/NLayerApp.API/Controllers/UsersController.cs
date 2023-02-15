@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NLayerApp.DAL.Entities;
 using NLayerApp.DAL.Repositories.Interfaces;
-using System.Diagnostics;
+using NLayerApp.DAL.Entities;
 
 namespace NLayerApp.API.Controllers
 {

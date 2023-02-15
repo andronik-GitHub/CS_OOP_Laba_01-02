@@ -9,8 +9,10 @@ namespace NLayerApp.DAL.App_Setting
 {
     public class App_Set
     {
-        public static async Task<string> Setting(string connectionString, IServiceProvider provider)
+        public static async Task<string> Setting(string connectionString, IServiceCollection services)
         {
+            var provider = services.BuildServiceProvider();
+
             try // створення БД
             {
                 using (var connection = new SqlConnection(connectionString))

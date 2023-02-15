@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NLayerApp.BLL\NLayerApp.BLL.csproj" />
     <ProjectReference Include="..\NLayerApp.DAL\NLayerApp.DAL.csproj" />
   </ItemGroup>
 
