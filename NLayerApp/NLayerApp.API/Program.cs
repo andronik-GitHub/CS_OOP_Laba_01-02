@@ -43,16 +43,13 @@ builder.Services.AddControllers();
     builder.Services.AddScoped<ICID_Table_TypesOfBooks, TABLE_TypesOfBooks>();
     builder.Services.AddScoped<ICID_Table_UserBooks, TABLE_UserBooks>();
     builder.Services.AddScoped<ICID_Table_Users, TABLE_Users>();
-
     DB_Collection_Books.services = builder.Services;
 }
 
 var app = builder.Build();
 
-
 // Створення БД/Таблиць та заповнення їх
 //await App_Set.Setting("Server=(localdb)\\mssqllocaldb;Database=master;Trusted_Connection=True;", builder.Services);
-
 
 app.MapControllers();
 
