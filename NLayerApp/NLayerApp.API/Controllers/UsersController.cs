@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NLayerApp.BLL.DTO;
 using NLayerApp.BLL.Services.Interfaces;
+using NLayerEF.DAL.Repositories;
 
 namespace NLayerApp.API.Controllers
 {
@@ -9,9 +10,12 @@ namespace NLayerApp.API.Controllers
     public class UsersController : Controller
     {
         IUserService _userService;
-        public UsersController(IUserService userService)
+        IUnitOfWorkEF unitOfWorkEF;
+        public UsersController(IUserService userService,
+            IUnitOfWorkEF unitOfWorkEF)
         {
             this._userService = userService;
+            this.unitOfWorkEF = unitOfWorkEF;
         }
 
 
@@ -32,12 +36,37 @@ namespace NLayerApp.API.Controllers
             }
         }
 
-        [HttpGet("{id}")] // GET: api/users/id
-        public async Task<ActionResult<UserDTO>> GetByIdAsync(int id)
+        [HttpGet("ADO/{id}")] // GET: api/users/id
+        public async Task<ActionResult<UserDTO>> GetByIdADOAsync(int id)
         {
             try
             {
                 var result = await _userService.GetAsync(id); // чи взагалі є такий запис в БД
+
+                if (result == null)
+                {
+                    Console.WriteLine($"Users {id} from [Users] not found");
+                    return NotFound();
+                }
+                else
+                {
+                    Console.WriteLine($"Users {result.Id} were successfully extracted from [Users]");
+                    return Ok(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error in [UsersController]->[GetByIdAsync]\n " + ex.Message);
+                return StatusCode(500, "Status Code: 500");
+            }
+        }
+
+        [HttpGet("EF/{id}")] // GET: api/users/id
+        public async Task<ActionResult<UserDTO>> GetByIdEFAsync(int id)
+        {
+            try
+            {
+                var result = await unitOfWorkEF.userRep.GetByIdAsync(id); // чи взагалі є такий запис в БД
 
                 if (result == null)
                 {

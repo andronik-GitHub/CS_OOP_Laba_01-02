@@ -3,11 +3,14 @@ using NLayerApp.DAL.App_Setting.DB_Tables.Interfaces;
 using NLayerApp.DAL.Repositories.Classes;
 using NLayerApp.DAL.Repositories.Interfaces;
 using NLayerApp.DAL.App_Setting;
+using NLayerEF.DAL.Data;
 
 using System.Data.SqlClient;
 using System.Data;
 using NLayerApp.BLL.Services.Interfaces;
 using NLayerApp.BLL.Services.Classes;
+using NLayerEF.DAL.Repositories;
+
 
 var builder = WebApplication.CreateBuilder();
 
@@ -18,6 +21,14 @@ builder.Services.AddSwaggerGen();
     // DAL
     {
 
+        //Connection for EF database + DbContext
+        builder.Services.AddDbContext<MyContext>(options =>
+        {
+            string? connectionString = builder.Configuration.GetConnectionString("MSSQLConnection");
+            //options.UseSqlServer(connectionString);
+        });
+
+        // Connection for ADO.NET + Dapper
         builder.Services.AddScoped((s) => {
             return new SqlConnection("Server=(localdb)\\mssqllocaldb;Database=Collection_Books;Trusted_Connection=True;");
         });
@@ -28,8 +39,11 @@ builder.Services.AddSwaggerGen();
             return conn.BeginTransaction();
         });
 
+        // EF Repositories
+        builder.Services.AddScoped<IUserRepository, UserRepository>();
+        builder.Services.AddScoped<IUnitOfWorkEF, UnitOfWorkEF>();
 
-        // Generic_Repository
+        // Repositories ADO.NET + Dapper
         builder.Services.AddScoped<IBook_Repository, Book_Repository>();
         builder.Services.AddScoped<IBookWithGenre_Repository, BookWithGenre_Repository>();
         builder.Services.AddScoped<IGenreOfBook_Repository, GenreOfBook_Repository>();
