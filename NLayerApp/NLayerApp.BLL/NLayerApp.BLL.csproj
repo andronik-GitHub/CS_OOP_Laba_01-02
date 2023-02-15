@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NLayerApp.DAL\NLayerApp.DAL.csproj" />
+    <ProjectReference Include="..\NLayerApp.DAL\NLayerADO.DAL.csproj" />
   </ItemGroup>
 
   <ItemGroup>

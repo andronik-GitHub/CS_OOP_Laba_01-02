@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NLayerApp.BLL\NLayerApp.BLL.csproj" />
-    <ProjectReference Include="..\NLayerApp.DAL\NLayerApp.DAL.csproj" />
+    <ProjectReference Include="..\NLayerApp.DAL\NLayerADO.DAL.csproj" />
     <ProjectReference Include="..\NLayerEF.DAL\NLayerEF.DAL.csproj" />
   </ItemGroup>
 
